@@ -25,14 +25,18 @@
   flex-direction:row;
 }
 .suggestions-data {
-  width:80%;
+  width:85%;
   height: 100%;
 }
 .suggestions-buttons {
-  width:20%;
+  width:15%;
   height: 100%;
 }
 
+.separate-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
   
 img {
   width: 100%; /* takes the 100 % width of its container (.box div)*/
