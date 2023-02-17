@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+{% autoescape false %}
+    
+<div class="container">
+    <h1/align="center">Suggestions</h1>
+    <p/align="center">
+    <b>Accept</b> or <b>decline</b> sent suggestions regarding new plants from users.
+    </p>
+    <div class="box">
+        <ul class="list-group list-group-flush" id="plants">
+    </div>
+        
+        {% for suggestion in suggestions %}
+        <li class="list-group-item">
+          {{ suggestion.data }}
+            {% if user.email == "kristian.paivinen@yahoo.com" %}
+                <button type="button" class="delete" onClick="deleteSuggestion({{ suggestion.id }})">
+                <span aria-hidden="true">&times;</span>
+                <button type="button" class="accept" onClick="acceptSuggestion({{ suggestion.id }})"></button>
+                <span aria-hidden="true">✔</span>
+            {% endif %}
+          </button>
+        </li>
+        {% endfor %}
+            
+        </ul>
+    </div>
+</div>
+
+{% endautoescape %}
+{% endblock %}

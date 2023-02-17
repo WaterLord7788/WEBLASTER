@@ -35,6 +35,9 @@
           <a class="nav-item nav-link" id="home" href="/">Home</a>
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           <a class="nav-item nav-link" id="home" href="/plants">Plants</a>
+            {% if user.email == "kristian.paivinen@yahoo.com" %}
+              <a class="nav-item nav-link" id="home" href="/suggestions">Suggested plants</a>
+            {% endif %}
           {% else %}
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
           <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
@@ -100,6 +103,18 @@ function deletePlant(plantId) {
   });
 }
 </script>
+<!--
+<script>
+function submitForm() {
+    var http = new XMLHttpRequest();
+    http.open("POST", "/suggest", true);
+    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    var params = "plant=" + document.getElementById("plant").value; // probably use document.getElementById(...).value
+    http.send(params);
+    http.onload = function() {console.log("[INFO] /suggest : POST, with values: '"+params+"'")}
+}
+</script>
+-->
 {% endblock %}
   </body>
 </html>

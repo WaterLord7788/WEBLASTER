@@ -5,8 +5,7 @@ from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
 import json
 import os
-from .models import Note
-from .models import Plant
+from .models import Note, Plant, Suggestion
 from . import db
 
 views = Blueprint('views', __name__)
@@ -32,11 +31,11 @@ def home():
         else:
             flash('No notes to add!', category='failure')
 
-    return render_template("home.html", user=current_user)
+    return render_template("home.html", user=current_user, ADMIN=ADMIN)
 
 
 @views.route('/plants', methods=['GET', 'POST'])
-def admin():
+def plants():
     print(Plant.query.all())
     if request.method == 'POST' and current_user.email == ADMIN:
         plant = request.form.get('plant') #Gets the plant from the HTML
@@ -50,13 +49,47 @@ def admin():
                 flash('Plant added!', category='success')
         else:
             flash('No plants to add!', category='failure')
+    elif request.method == 'POST' and current_user.email != ADMIN and current_user.email != None:
+        plant = request.form.get('plant') #Gets the plant from the HTML
+        if plant:
+            if len(plant) < 1:
+                flash('Information regarding plant is too short!', category='error') 
+            else:
+                new_suggestion = Suggestion(data=plant)  #Providing the schema for the plant 
+                db.session.add(new_suggestion) #Adding the plant to the database 
+                db.session.commit()
+                flash('Suggestion added!', category='success')
+        else:
+            flash('No suggestions to add!', category='failure')
     plants = Plant.query.all()
     return render_template("plants.html", user=current_user, plants=plants)
+
+
+### EXPIREMENTAL ###
+@views.route('/suggestions', methods=['GET', 'POST'])
+def suggestions():
+    print(Suggestion.query.all())
+    if request.method == 'POST' and current_user.email != ADMIN and current_user.email != None:
+        suggestion = request.form.get('suggestion')
+        if suggestion:
+            if len(suggestion) < 1:
+                flash('Information regarding new suggestion is too short!', category='error') 
+            else:
+                new_suggestion = Suggestion(data=suggestion)
+                db.session.add(new_suggestion)
+                db.session.commit()
+                flash('Suggestion added!', category='success')
+        else:
+            flash('No suggestions to add!', category='failure')
+    suggestions = Suggestion.query.all()
+    return render_template("suggestions.html", user=current_user, suggestions=suggestions)
+### EXPIREMENTAL ###
 
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @views.route('/upload', methods=['GET', 'POST'])
 def upload_file():
