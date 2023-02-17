@@ -35,7 +35,6 @@ def home():
     return render_template("home.html", user=current_user)
 
 
-### Plants page ###
 @views.route('/plants', methods=['GET', 'POST'])
 def admin():
     print(Plant.query.all())
@@ -53,10 +52,8 @@ def admin():
             flash('No plants to add!', category='failure')
     plants = Plant.query.all()
     return render_template("plants.html", user=current_user, plants=plants)
-### Plants page ###
 
 
-### Image uploading ###
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -64,10 +61,8 @@ def allowed_file(filename):
 @views.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
-            #return redirect(request.url)
             return '''
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
@@ -87,8 +82,6 @@ def upload_file():
             </upload-image>
             '''
         file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
         if file.filename == '':
             flash('No selected file')
         if file and allowed_file(file.filename):
@@ -155,7 +148,6 @@ def upload_file():
                 </div>
             </upload-image>
             '''
-### Image uploading ###
 
 
 @views.route('/delete-note', methods=['POST'])
@@ -169,7 +161,6 @@ def delete_note():
             db.session.commit()
 
     return jsonify({})
-
 
 @views.route('/delete-plant', methods=['POST'])
 def delete_plant():  

@@ -23,7 +23,23 @@
                 </form>
                 </upload-note>
             </div class="embed">
+        {% elif user.email != "kristian.paivinen@yahoo.com" and user.email != none %}
+            <div/align="center" class="embed">
+                <h4>Suggest a new plant</h3>
+                <p>Your suggestion about a new plant should contain at least these things: <b>image of it</b>, <b>small description</b>, <b>and how to care</b> for it indoors.</p>
+                <iframe frameBorder="0" width="1080" height="120" scrolling="no" src="http://127.0.0.1:5000/upload"></iframe>
+                <upload-note>
+                <form method="POST">
+                    <textarea name="plant" id="plant" class="form-control"></textarea>
+                    <div/align="center">
+                    <button type="submit" class="btn btn-primary">Send suggestion</button>
+                    <br \>
+                    </div>
+                </form>
+            </upload-note>
         {% endif %}
+        
+    </div>
         
         {% for plant in plants %}
         <li class="list-group-item">
