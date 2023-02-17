@@ -1,18 +1,14 @@
 from flask import Blueprint, request, flash, jsonify, flash, redirect, url_for
 from flask import Flask, render_template, session
 from flask_login import login_required, current_user
+from . import db, ALLOWED_EXTENSIONS, UPLOAD_FOLDER, ADMIN
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
 import json
 import os
 from .models import Note, Plant, Suggestion
-from . import db
 
 views = Blueprint('views', __name__)
-
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/img/')
-ADMIN = "kristian.paivinen@yahoo.com"
 
 
 @views.route('/', methods=['GET', 'POST'])
@@ -65,10 +61,8 @@ def plants():
     return render_template("plants.html", user=current_user, plants=plants)
 
 
-### EXPIREMENTAL ###
 @views.route('/suggestions', methods=['GET', 'POST'])
 def suggestions():
-    #print(Suggestion.query.all())
     if request.method == 'POST' and current_user.email != ADMIN and current_user.email != None:
         suggestion = request.form.get('suggestion')
         if suggestion:
@@ -83,7 +77,6 @@ def suggestions():
             flash('No suggestions to add!', category='failure')
     suggestions = Suggestion.query.all()
     return render_template("suggestions.html", user=current_user, suggestions=suggestions)
-### EXPIREMENTAL ###
 
 
 def allowed_file(filename):
@@ -217,11 +210,7 @@ def accept_suggestion():
     suggestionDate = Suggestion.query.get(suggestionId).date
     suggestionUserID = Suggestion.query.get(suggestionId).user_id
     suggestion = Suggestion.query.get(suggestionId) # Rewriting it to be a new value
-    #print(suggestionId)
-    #print(Suggestion.query.get(suggestionId).id)
-    #plant = Suggestion.query.get(suggestionId)
     new_plant = Plant(id=suggestionId, data=suggestionData, date=suggestionDate, user_id=suggestionUserID)
-
     if new_plant:
         if current_user.email == ADMIN:
             #new_plant = Plant(data=plant)  #Providing the schema for the plant
@@ -229,8 +218,6 @@ def accept_suggestion():
             db.session.delete(suggestion)
             db.session.commit()
             flash('Suggestion accepted and a new plant created!', category='success')
-
-
     return jsonify({})
 
 
@@ -245,3 +232,12 @@ def delete_suggestion():
             db.session.commit()
             flash('Suggestion deleted!', category='success')
     return jsonify({})
+
+
+### DEBUGGING ###
+@views.route('/debug', methods=['GET'])
+def debug():
+    raise
+### DEBUGGING ###
+
+

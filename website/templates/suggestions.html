@@ -12,14 +12,21 @@
         
         {% for suggestion in suggestions %}
         <li class="list-group-item">
-          {{ suggestion.data }}
-            {% if user.email == "kristian.paivinen@yahoo.com" %}
-                <div/align="right">
-                    <button type="button" class="decline btn btn-danger" onclick="deleteSuggestion({{ suggestion.id }})">Delete</button>
-                    <button type="button" class="accept btn btn-success" onclick="acceptSuggestion({{ suggestion.id }})">Accept</button>
+            <div class="suggestions-box">
+                <div class="suggestions-data">
+                    <div/align="left">
+                        {{ suggestion.data }}
+                    </div>
                 </div>
+            {% if user.email == "kristian.paivinen@yahoo.com" %}
+                <div class="suggestions-buttons">
+                    <div/align="right">
+                        <button type="button" class="decline btn btn-danger" onclick="deleteSuggestion({{ suggestion.id }})">Delete</button>
+                        <button type="button" class="accept btn btn-success" onclick="acceptSuggestion({{ suggestion.id }})">Accept</button>
+                    </div>
+                <div>
             {% endif %}
-          </button>
+            </div>
         </li>
         {% endfor %}
             

@@ -2,9 +2,14 @@ from flask import Flask, flash, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from os.path import join, dirname, realpath
+import os
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/img/')
+ADMIN = "kristian.paivinen@yahoo.com"
 
 
 def create_app():
