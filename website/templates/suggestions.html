@@ -7,24 +7,23 @@
     <b>Accept</b> or <b>decline</b> sent suggestions regarding new plants from users.
     </p>
     <div class="box">
-        <ul class="list-group list-group-flush" id="plants">
+        <ul class="list-group list-group-flush" id="suggestions">
     </div>
         
         {% for suggestion in suggestions %}
         <li class="list-group-item">
           {{ suggestion.data }}
             {% if user.email == "kristian.paivinen@yahoo.com" %}
-                <button type="button" class="delete" onClick="deleteSuggestion({{ suggestion.id }})">
-                <span aria-hidden="true">&times;</span>
-                <button type="button" class="accept" onClick="acceptSuggestion({{ suggestion.id }})"></button>
-                <span aria-hidden="true">✔</span>
+                <div/align="right">
+                    <button type="button" class="decline btn btn-danger" onclick="deleteSuggestion({{ suggestion.id }})">Delete</button>
+                    <button type="button" class="accept btn btn-success" onclick="acceptSuggestion({{ suggestion.id }})">Accept</button>
+                </div>
             {% endif %}
           </button>
         </li>
         {% endfor %}
             
         </ul>
-    </div>
 </div>
 
 {% endautoescape %}

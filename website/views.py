@@ -36,7 +36,7 @@ def home():
 
 @views.route('/plants', methods=['GET', 'POST'])
 def plants():
-    print(Plant.query.all())
+    #print(Plant.query.all())
     if request.method == 'POST' and current_user.email == ADMIN:
         plant = request.form.get('plant') #Gets the plant from the HTML
         if plant:
@@ -68,7 +68,7 @@ def plants():
 ### EXPIREMENTAL ###
 @views.route('/suggestions', methods=['GET', 'POST'])
 def suggestions():
-    print(Suggestion.query.all())
+    #print(Suggestion.query.all())
     if request.method == 'POST' and current_user.email != ADMIN and current_user.email != None:
         suggestion = request.form.get('suggestion')
         if suggestion:
@@ -195,6 +195,7 @@ def delete_note():
 
     return jsonify({})
 
+
 @views.route('/delete-plant', methods=['POST'])
 def delete_plant():  
     plant = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
@@ -204,5 +205,43 @@ def delete_plant():
         if current_user.email == ADMIN:
             db.session.delete(plant)
             db.session.commit()
+            flash('Plant deleted!', category='success')
+    return jsonify({})
 
+
+@views.route('/accept-suggestion', methods=['POST'])
+def accept_suggestion():
+    suggestion = json.loads(request.data) # The ID of the suggestion
+    suggestionId = suggestion['suggestionId']
+    suggestionData = Suggestion.query.get(suggestionId).data
+    suggestionDate = Suggestion.query.get(suggestionId).date
+    suggestionUserID = Suggestion.query.get(suggestionId).user_id
+    suggestion = Suggestion.query.get(suggestionId) # Rewriting it to be a new value
+    #print(suggestionId)
+    #print(Suggestion.query.get(suggestionId).id)
+    #plant = Suggestion.query.get(suggestionId)
+    new_plant = Plant(id=suggestionId, data=suggestionData, date=suggestionDate, user_id=suggestionUserID)
+
+    if new_plant:
+        if current_user.email == ADMIN:
+            #new_plant = Plant(data=plant)  #Providing the schema for the plant
+            db.session.add(new_plant) #Adding the plant to the database
+            db.session.delete(suggestion)
+            db.session.commit()
+            flash('Suggestion accepted and a new plant created!', category='success')
+
+
+    return jsonify({})
+
+
+@views.route('/delete-suggestion', methods=['POST'])
+def delete_suggestion():
+    suggestion = json.loads(request.data) # this function expects a JSON from the INDEX.js file
+    suggestionId = suggestion['suggestionId']
+    suggestion = Suggestion.query.get(suggestionId)
+    if suggestion:
+        if current_user.email == ADMIN:
+            db.session.delete(suggestion)
+            db.session.commit()
+            flash('Suggestion deleted!', category='success')
     return jsonify({})

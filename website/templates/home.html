@@ -3,14 +3,13 @@
 {% autoescape false %}
 
 <div class="container">
-  <h1 align="center">Notes v1</h1>
-  <p align="center">
+  <h1/align="center">Notes v1</h1>
+  <p/align="center">
     Use <b>HTML</b> to make your notes more beautiful!</b>
     <br>In addition, you can upload an image and paste it into your notes.
   </p>
   <div class="box">
     <ul class="list-group list-group-flush" id="notes">
-      <!--<iframe scrolling="no" frameBorder="0" srcdoc='-->
         {% for note in user.notes %}
         <li class="list-group-item">
           {{ note.data }}
@@ -19,7 +18,6 @@
           </button>
         </li>
         {% endfor %}
-      <!--'\></iframe>-->
     </ul>
   </div>
 
@@ -31,7 +29,7 @@
       <form method="POST">
         <textarea name="note" id="note" class="form-control"></textarea>
         <br />
-        <div align="center">
+        <div/align="center">
           <button type="submit" class="btn btn-primary">Add Note</button>
         </div>
       </form>

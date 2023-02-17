@@ -84,37 +84,42 @@
 
 {% block javascript %}
 <script type="text/javascript">
-function deleteNote(noteId) {
-  fetch("/delete-note", {
-    method: "POST",
-    body: JSON.stringify({ noteId: noteId }),
-  }).then((_res) => {
-    window.location.href = "/";
-  });
-}
+  function deleteNote(noteId) {
+    fetch("/delete-note", {
+      method: "POST",
+      body: JSON.stringify({ noteId: noteId }),
+    }).then((_res) => {
+      window.location.href = "/";
+    });
+  }
+
+  function deletePlant(plantId) {
+    fetch("/delete-plant", {
+      method: "POST",
+      body: JSON.stringify({ plantId: plantId }),
+    }).then((_res) => {
+      window.location.href = "/plants";
+    });
+  }
+
+  function acceptSuggestion(suggestionId) {
+    fetch("/accept-suggestion", {
+      method: "POST",
+      body: JSON.stringify({ suggestionId: suggestionId }),
+    }).then((_res) => {
+      window.location.href = "/suggestions";
+    });
+  }
+
+  function deleteSuggestion(suggestionId) {
+    fetch("/delete-suggestion", {
+      method: "POST",
+      body: JSON.stringify({ suggestionId: suggestionId }),
+    }).then((_res) => {
+      window.location.href = "/suggestions";
+    });
+  }
 </script>
-<script type="text/javascript">
-function deletePlant(plantId) {
-  fetch("/delete-plant", {
-    method: "POST",
-    body: JSON.stringify({ plantId: plantId }),
-  }).then((_res) => {
-    window.location.href = "/plants";
-  });
-}
-</script>
-<!--
-<script>
-function submitForm() {
-    var http = new XMLHttpRequest();
-    http.open("POST", "/suggest", true);
-    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    var params = "plant=" + document.getElementById("plant").value; // probably use document.getElementById(...).value
-    http.send(params);
-    http.onload = function() {console.log("[INFO] /suggest : POST, with values: '"+params+"'")}
-}
-</script>
--->
 {% endblock %}
   </body>
 </html>
