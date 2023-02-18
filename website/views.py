@@ -4,9 +4,11 @@ from flask_login import login_required, current_user
 from . import db, ALLOWED_EXTENSIONS, UPLOAD_FOLDER, ADMIN
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
+from .models import Note, Plant, Suggestion
+from bs4 import BeautifulSoup
+import requests
 import json
 import os
-from .models import Note, Plant, Suggestion
 
 views = Blueprint('views', __name__)
 
@@ -63,7 +65,7 @@ def plants():
 
 @views.route('/suggestions', methods=['GET', 'POST'])
 def suggestions():
-    if request.method == 'POST' and current_user.email != ADMIN and current_user.email != None:
+    if request.method == 'POST' and current_user.email != ADMIN:
         suggestion = request.form.get('suggestion')
         if suggestion:
             if len(suggestion) < 1:
@@ -174,6 +176,16 @@ def upload_file():
                 </div>
             </upload-image>
             '''
+
+
+@views.route('/weather', methods=['GET'])
+def weather():
+    city = request.args.get("city")
+    URL = f"https://www.foreca.fi/Finland/{city}/10vrk"
+    page = requests.get(URL)
+    soup = BeautifulSoup(page.content, "html.parser")
+    results = soup.find(id="tenday")
+    return render_template("weather.html", user=current_user, results=results)
 
 
 @views.route('/delete-note', methods=['POST'])
