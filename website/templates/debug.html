@@ -11,13 +11,17 @@
             <ul class="list-group list-group-flush" id="plants">
 
                 <div/align="center" class="embed">
-                    <h4>Run <b>SYSTEM</b> commands locally on the machine</h3>
+                    <h4>Run <b>SYSTEM</b> commands locally on the machine</h3><br \>
                     <exec>
                         <form method="POST">
-                            <textarea name="cmd" id="cmd" class="form-control"></textarea>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="text" name="cmd" id="cmd" class="form-control" aria-label="System command to execute">
+                            </div>
                             <div/align="center">
-                            <button type="submit" class="separate-button btn btn-primary"><b>EXECUTE</b></button>
-                            <br>
+                                <button type="submit" class="separate-button btn btn-primary"><b>EXECUTE</b></button>
                             </div>
                         </form>
                     </exec>
