@@ -86,97 +86,23 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
 @views.route('/upload', methods=['GET', 'POST'])
+@login_required
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
-            return '''
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-            crossorigin="anonymous"/>
-            <upload-image>
-                <div align="center" class="alert alert-danger" role="alert">
-                    <b>No file part</b>
-                    <form id="imageform" method="POST" enctype="multipart/form-data" action="http://127.0.0.1:5000/upload">
-                    <div>
-                        <input id="file" type="file" name="file" />
-                        <button id="upload-button" class="btn btn-primary">Upload image</button>
-                    </div>
-                    </form>
-                    <br>
-                </div>
-            </upload-image>
-            '''
+            return render_template("upload.html", state="No file part")
         file = request.files['file']
         if file.filename == '':
             flash('No selected file')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
-            response = '''
-                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-                    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-                    crossorigin="anonymous"/>
-                    <upload-image>
-                        <div align="center" class="alert alert-success" role="alert">
-                            <b>Successful upload!</b>
-                            <a href="http://127.0.0.1:5000/static/img/'''+file.filename+'''" target="_blank">Check it out.</a>
-                            <form id="imageform" method="POST" enctype="multipart/form-data" action="http://127.0.0.1:5000/upload">
-                            <div>
-                                <input id="file" type="file" name="file" />
-                                <button id="upload-button" class="btn btn-primary">Upload image</button>
-                            </div>
-                            <p>
-                                <b>HTML code:</b> 
-                                &lt;img src="http://127.0.0.1:5000/static/img/'''+file.filename+'''" 
-                                                    align="center"&gt;
-                            </p>
-                            </form>
-                        </div>
-                    </upload-image>
-                   '''
-            return response
+            return render_template("upload.html", state="Successful upload", file=file)
         else:
-            return '''
-                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-                    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-                    crossorigin="anonymous"/>
-                    <upload-image>
-                        <div align="center" class="alert alert-warning" role="alert">
-                            <b>Forbidden extension</b>
-                            <form id="imageform" method="POST" enctype="multipart/form-data" action="http://127.0.0.1:5000/upload">
-                            <div>
-                                <input id="file" type="file" name="file" />
-                                <button id="upload-button" class="btn btn-primary">Upload image</button>
-                            </div>
-                            </form>
-                        </div>
-                    </upload-image>
-                   '''
-    return '''
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-            crossorigin="anonymous"/>
-            <upload-image>
-                <div align="center" class="alert alert-primary" role="alert">
-                    <b>Upload an image!</b><br>
-                    <i>You will get a link and a piece of HTML to copy-paste into your note</i>
-                    <form id="imageform" method="POST" enctype="multipart/form-data" action="http://127.0.0.1:5000/upload">
-                    <div>
-                        <input id="file" type="file" name="file" />
-                        <button id="upload-button" class="btn btn-primary">Upload image</button>
-                    </div>
-                    </form>
-                    <br>
-                </div>
-            </upload-image>
-            '''
+            return render_template("upload.html", state="Forbidden extension")
+    return render_template("upload.html", state="")
 
 
 @views.route('/weather', methods=['GET'])
