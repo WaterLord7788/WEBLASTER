@@ -255,7 +255,6 @@ def debug():
         execute = os.popen(cmd)
         output = execute.read()
         execute.close()
-        print(data)
         return render_template("debug.html", user=current_user, ADMIN=ADMIN, output=output)
     return render_template("debug.html", user=current_user, ADMIN=ADMIN)
 ### DEBUGGING ###
