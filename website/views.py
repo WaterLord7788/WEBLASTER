@@ -64,6 +64,7 @@ def plants():
 
 
 @views.route('/suggestions', methods=['GET', 'POST'])
+@login_required
 def suggestions():
     if request.method == 'POST' and current_user.email != ADMIN:
         suggestion = request.form.get('suggestion')
@@ -78,7 +79,7 @@ def suggestions():
         else:
             flash('No suggestions to add!', category='failure')
     suggestions = Suggestion.query.all()
-    return render_template("suggestions.html", user=current_user, suggestions=suggestions)
+    return render_template("suggestions.html", user=current_user, suggestions=suggestions, ADMIN=ADMIN)
 
 
 def allowed_file(filename):
