@@ -60,7 +60,7 @@ def plants():
         else:
             flash('No suggestions to add!', category='failure')
     plants = Plant.query.all()
-    return render_template("plants.html", user=current_user, plants=plants)
+    return render_template("plants.html", user=current_user, plants=plants, ADMIN=ADMIN)
 
 
 @views.route('/suggestions', methods=['GET', 'POST'])

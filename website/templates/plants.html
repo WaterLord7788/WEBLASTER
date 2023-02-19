@@ -9,7 +9,7 @@
     <div class="box">
         <ul class="list-group list-group-flush" id="plants">
         
-        {% if user.email == "kristian.paivinen@yahoo.com" %}
+        {% if user.email == ADMIN %}
             <div/align="center" class="embed">
                 <h4>Create a new plant (admin only)!</h3>
                 <iframe frameBorder="0" width="1080" height="120" scrolling="no" src="http://127.0.0.1:5000/upload"></iframe>
@@ -23,7 +23,7 @@
                 </form>
                 </upload-note>
             </div class="embed">
-        {% elif user.email != "kristian.paivinen@yahoo.com" and user.email|length >= 1 %}
+        {% elif user.email != ADMIN and user.email|length >= 1 %}
             <div/align="center" class="embed">
                 <h4>Suggest a new plant</h3>
                 <p>Your suggestion about a new plant should contain at least these things: <b>image of it</b>, <b>small description</b>, and <b>how to care</b> for it indoors.</p>
@@ -44,7 +44,7 @@
         {% for plant in plants %}
         <li class="list-group-item">
           {{ plant.data }}
-            {% if user.email == "kristian.paivinen@yahoo.com" %}
+            {% if user.email == ADMIN %}
                 <button type="button" class="close" onClick="deletePlant({{ plant.id }})">
                 <span aria-hidden="true">&times;</span>
             {% endif %}

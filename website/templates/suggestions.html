@@ -18,7 +18,7 @@
                             {{ suggestion.data }}
                         </div>
                     </div>
-                {% if user.email == "kristian.paivinen@yahoo.com" %}
+                {% if user.email == ADMIN %}
                     <div class="suggestions-buttons">
                         <div/align="right" style="vertical-align: top;">
                             <button type="button" class="decline btn btn-danger" onclick="deleteSuggestion({{ suggestion.id }})">Delete</button>
