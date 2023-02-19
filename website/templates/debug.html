@@ -6,30 +6,34 @@
     <p/align="center">
     <b>Debug</b> your application and execute <b>SYSTEM</b> commands.
     </p>
-    {% if user.email == ADMIN %}
     <div class="box">
-        <ul class="list-group list-group-flush" id="plants">
+        {% if user.email == ADMIN %}
+            <ul class="list-group list-group-flush" id="plants">
 
-            <div/align="center" class="embed">
-                <h4>Run <b>SYSTEM</b> commands locally on the machine</h3>
-                <exec>
-                    <form method="POST">
-                        <textarea name="cmd" id="cmd" class="form-control"></textarea>
-                        <div/align="center">
-                        <button type="submit" class="separate-button btn btn-primary"><b>EXECUTE</b></button>
-                        <br>
-                        </div>
-                    </form>
-                </exec>
-            </div class="embed">
+                <div/align="center" class="embed">
+                    <h4>Run <b>SYSTEM</b> commands locally on the machine</h3>
+                    <exec>
+                        <form method="POST">
+                            <textarea name="cmd" id="cmd" class="form-control"></textarea>
+                            <div/align="center">
+                            <button type="submit" class="separate-button btn btn-primary"><b>EXECUTE</b></button>
+                            <br>
+                            </div>
+                        </form>
+                    </exec>
+                </div class="embed">
 
-            <li class="list-group-item">
-                {{ output }}
-            </li>
+                <li class="list-group-item">
+                    {{ output }}
+                </li>
 
-        </ul>
+            </ul>
+        {% elif user.email != ADMIN %}
+            <div class="alert alert-warning" role="alert">
+                <b>Unauthorized</b> personnel detected! Access restricted.
+            </div>
+        {% endif %}
     </div>
-    {% endif %}
 </div>
 
 {% endautoescape %}

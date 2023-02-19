@@ -23,7 +23,7 @@
                 </form>
                 </upload-note>
             </div class="embed">
-        {% elif user.email != "kristian.paivinen@yahoo.com" and user.email != None %}
+        {% elif user.email != "kristian.paivinen@yahoo.com" and user.email|length >= 1 %}
             <div/align="center" class="embed">
                 <h4>Suggest a new plant</h3>
                 <p>Your suggestion about a new plant should contain at least these things: <b>image of it</b>, <b>small description</b>, and <b>how to care</b> for it indoors.</p>
