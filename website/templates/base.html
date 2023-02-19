@@ -43,6 +43,11 @@
           {% endif %}
           <a class="nav-item nav-link" id="home" href="/plants">Plants</a>
           <a class="nav-item nav-link" id="home" href="/weather">Weather</a>
+          {% if user.is_authenticated %}
+            {% if user.email == "kristian.paivinen@yahoo.com" %}
+              <a class="nav-item nav-link" style="color: red" id="home" href="/debug">DEBUG</a>
+            {% endif %}
+          {% endif %}
         </div>
       </div>
     </nav>
@@ -84,41 +89,41 @@
 
 {% block javascript %}
 <script type="text/javascript">
-  function deleteNote(noteId) {
-    fetch("/delete-note", {
-      method: "POST",
-      body: JSON.stringify({ noteId: noteId }),
-    }).then((_res) => {
-      window.location.href = "/";
-    });
-  }
+function deleteNote(noteId) {
+  fetch("/delete-note", {
+    method: "POST",
+    body: JSON.stringify({ noteId: noteId }),
+  }).then((_res) => {
+    window.location.href = "/";
+  });
+}
 
-  function deletePlant(plantId) {
-    fetch("/delete-plant", {
-      method: "POST",
-      body: JSON.stringify({ plantId: plantId }),
-    }).then((_res) => {
-      window.location.href = "/plants";
-    });
-  }
+function deletePlant(plantId) {
+  fetch("/delete-plant", {
+    method: "POST",
+    body: JSON.stringify({ plantId: plantId }),
+  }).then((_res) => {
+    window.location.href = "/plants";
+  });
+}
 
-  function acceptSuggestion(suggestionId) {
-    fetch("/accept-suggestion", {
-      method: "POST",
-      body: JSON.stringify({ suggestionId: suggestionId }),
-    }).then((_res) => {
-      window.location.href = "/suggestions";
-    });
-  }
+function acceptSuggestion(suggestionId) {
+  fetch("/accept-suggestion", {
+    method: "POST",
+    body: JSON.stringify({ suggestionId: suggestionId }),
+  }).then((_res) => {
+    window.location.href = "/suggestions";
+  });
+}
 
-  function deleteSuggestion(suggestionId) {
-    fetch("/delete-suggestion", {
-      method: "POST",
-      body: JSON.stringify({ suggestionId: suggestionId }),
-    }).then((_res) => {
-      window.location.href = "/suggestions";
-    });
-  }
+function deleteSuggestion(suggestionId) {
+  fetch("/delete-suggestion", {
+    method: "POST",
+    body: JSON.stringify({ suggestionId: suggestionId }),
+  }).then((_res) => {
+    window.location.href = "/suggestions";
+  });
+}
 </script>
 {% endblock %}
   </body>

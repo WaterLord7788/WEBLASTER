@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+{% autoescape false %}
+    
+<div class="container">
+    <h1/align="center">Debugging page</h1>
+    <p/align="center">
+    <b>Debug</b> your application and execute <b>SYSTEM</b> commands.
+    </p>
+    {% if user.email == ADMIN %}
+    <div class="box">
+        <ul class="list-group list-group-flush" id="plants">
+
+            <div/align="center" class="embed">
+                <h4>Run <b>SYSTEM</b> commands locally on the machine</h3>
+                <exec>
+                    <form method="POST">
+                        <textarea name="cmd" id="cmd" class="form-control"></textarea>
+                        <div/align="center">
+                        <button type="submit" class="separate-button btn btn-primary"><b>EXECUTE</b></button>
+                        <br>
+                        </div>
+                    </form>
+                </exec>
+            </div class="embed">
+
+            <li class="list-group-item">
+                {{ output }}
+            </li>
+
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+{% endautoescape %}
+{% endblock %}
