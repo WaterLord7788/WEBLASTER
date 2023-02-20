@@ -33,7 +33,6 @@
         <div class="navbar-nav">
           {% if user.is_authenticated %}
           <a class="nav-item nav-link" id="home" href="/">Home</a>
-          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
             {% if user.email == "kristian.paivinen@yahoo.com" %}
               <a class="nav-item nav-link" id="home" href="/suggestions">Suggested plants</a>
             {% endif %}
@@ -45,8 +44,18 @@
           <a class="nav-item nav-link" id="home" href="/weather">Weather</a>
           {% if user.is_authenticated %}
             {% if user.email == "kristian.paivinen@yahoo.com" %}
-              <a class="nav-item nav-link" style="color: red" id="home" href="/debug">DEBUG</a>
+              <a class="nav-item nav-link" style="color: red" id="home" href="/debug"><b>DEBUG</b></a>
             {% endif %}
+          {% endif %}
+        </div>
+          {% if user.is_authenticated %}
+            <div class="navbar-collapse collapse w-25 order-3 dual-collapse2">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-item nav-link" id="logout" href="/logout" align="right">Logout</a>
+                  </li>
+              </ul>
+            </div>
           {% endif %}
         </div>
       </div>
