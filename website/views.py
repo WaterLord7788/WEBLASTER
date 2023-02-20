@@ -28,7 +28,6 @@ def home():
                 flash('Note added!', category='success')
         else:
             flash('No notes to add!', category='failure')
-
     return render_template("home.html", user=current_user, ADMIN=ADMIN)
 
 
