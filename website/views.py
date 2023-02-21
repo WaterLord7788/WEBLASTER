@@ -186,3 +186,15 @@ def debug():
 ### DEBUGGING ###
 
 
+@views.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    if request.method == 'POST':
+        if request.form.get('description'):
+            new_description = request.form.get('description')
+            current_user.description = new_description
+        if request.form.get('phone'):
+            new_phone = request.form.get('phone')
+            current_user.phone = new_phone
+        flash('Profile updated!', category='success')
+    return render_template('profile.html', user=current_user)

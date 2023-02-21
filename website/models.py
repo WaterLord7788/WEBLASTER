@@ -16,6 +16,11 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     notes = db.relationship('Note')
     plants = db.relationship('Plant')
+    ### REGARDING PROFILE ###
+    description = db.Column(db.String(500))
+    profile_picture = db.Column(db.String(250))
+    phone = db.Column(db.String(50))
+    ### REGARDING PROFILE ###
 
 
 class Plant(db.Model):
