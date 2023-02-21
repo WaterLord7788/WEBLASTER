@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 from . import db, ALLOWED_EXTENSIONS, UPLOAD_FOLDER, ADMIN
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
-from .models import Note, Plant, Suggestion
+from .models import Note, Plant, Suggestion, User
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -189,12 +189,17 @@ def debug():
 @views.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    if request.method == 'POST':
+    if request.args.get("edit") == "true":
+        return render_template('profile.html', user=current_user, state="Profile edit")
+
+    elif request.method == 'POST':
+        #user = User.query.filter_by(id=current_user.id).first()
         if request.form.get('description'):
             new_description = request.form.get('description')
             current_user.description = new_description
         if request.form.get('phone'):
             new_phone = request.form.get('phone')
             current_user.phone = new_phone
+        db.session.commit()
         flash('Profile updated!', category='success')
     return render_template('profile.html', user=current_user)

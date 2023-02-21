@@ -17,12 +17,22 @@
                     <div class="row g-0">
                       <div class="col-md-4 gradient-custom text-center text-white"
                         style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                        <img src="{{ user.profile_picture }}"
-                          alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                        {% if user.profile_picture %}
+                          <img src="{{ user.profile_picture }}" alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                        {% else %}
+                        <div class="profile-pic">
+                          <label class="-label" for="file">
+                            <span class="glyphicon glyphicon-camera"></span>
+                            <span>Change Image</span>
+                          </label>
+                          <input id="file" type="file" onchange="loadFile(event)"/>
+                          <img src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output" width="200" />
+                        </div>
+                        {% endif %}
                         <h5 style="color:black">
                             {{ user.first_name }}
                         </h5>
-                        {% if user.description %}
+                        {% if user.description and state != "Profile edit" %}
                             <p style="color:black">{{ user.description }}</p>
                         {% else %}
                             <form method="POST" action="/profile">
@@ -44,7 +54,7 @@
                             </div>
                             <div class="col-6 mb-3">
                             <h6>Phone</h6>
-                            {% if user.phone %}
+                            {% if user.phone and state != "Profile edit" %}
                                 <p class="text-muted">{{ user.phone }}</p>
                             {% else %}
                                 <form method="POST" action="/profile">
