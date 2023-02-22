@@ -48,6 +48,9 @@
   height: 20%;
 }
 
+.profile-pic img {
+  margin-bottom: 5%;
+}
 
 .profile-edit-button {
   margin-right: 10%;
