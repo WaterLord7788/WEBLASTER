@@ -11,7 +11,7 @@
     <div class="profile-container">
         <section class="vh-100" style="background-color: #ffffff;">
             <div class="container py-5 h-100">
-              <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="row d-flex justify-content-center align-items-center h-50">
                 <div class="col col-lg-10 mb-100 ">
                   <div class="card mb-3" style="border-radius: .5rem;">
                     <div class="row g-0">
@@ -83,6 +83,22 @@
                             <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
                           </div>-->
                         </div>
+                        {% if state == "Profile edit" %}
+                          <div/align="right" class="profile-edit-button">
+                            <!--<form method="GET">
+                              <input type="hidden" id="edit-profile">
+                              <input type="submit" value="Back" class="btn btn-primary"></input>
+                            </form>-->
+                            <a href="http://127.0.0.1:5000/profile" class="btn btn-info">Back</a>
+                          </div>
+                        {% else %}
+                          <div/align="right" class="profile-edit-button">
+                            <form method="GET">
+                              <input type="hidden" name="edit" value="true" id="edit-profile">
+                              <input type="submit" value="Edit " class="btn btn-primary"></input>
+                            </form>
+                          </div>
+                        {% endif %}
                       </div>
                     </div>
                   </div>

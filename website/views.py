@@ -191,9 +191,7 @@ def debug():
 def profile():
     if request.args.get("edit") == "true":
         return render_template('profile.html', user=current_user, state="Profile edit")
-
     elif request.method == 'POST':
-        #user = User.query.filter_by(id=current_user.id).first()
         if request.form.get('description'):
             new_description = request.form.get('description')
             current_user.description = new_description
