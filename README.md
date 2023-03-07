@@ -24,3 +24,5 @@ Go to `http://127.0.0.1:5000`
 
 ## Sample images
 ![Live View](https://raw.githubusercontent.com/WaterLord7788/WEBLASTER/main/github-content/Screenshot%20(21).png)
+![Live View](https://raw.githubusercontent.com/WaterLord7788/WEBLASTER/main/github-content/Screenshot%20(20).png)
+![Live View](https://raw.githubusercontent.com/WaterLord7788/WEBLASTER/main/github-content/Screenshot%20(19).png)
