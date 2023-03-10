@@ -9,12 +9,12 @@ db = SQLAlchemy()
 DB_NAME = "database.db"
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/img/')
-ADMIN = "kristian.paivinen@yahoo.com"
+ADMIN = "<<your email>>"
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
+    app.config['SECRET_KEY'] = '<<secret key>>'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     #app.config['FSADeprecationWarning'] = True
     db.init_app(app)
